@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +44,10 @@ public class Oauth2IndexController {
     public R login(@Validated @RequestBody LoginForm loginForm, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             throw new BindException(result);
+        }
+        //认证码不正确
+        if (!cacheOperationService.existsCaptchaCode(loginForm.getUuid(), loginForm.getCaptcha())) {
+            return R.error(5101, "验证码错误");
         }
         Admin admin = adminService.getAdmin(loginForm.getUserName());
         if (admin == null) {
@@ -75,8 +80,4 @@ public class Oauth2IndexController {
         return map;
     }
 
-    @PostMapping("/getUser")
-    public R getUser() {
-        return R.ok("sda");
-    }
 }

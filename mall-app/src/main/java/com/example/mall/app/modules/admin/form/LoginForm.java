@@ -22,4 +22,9 @@ public class LoginForm implements Serializable {
     @NotEmpty
     @NotNull
     private String captcha;
+
+    @Size(min = 36, max = 36)
+    @NotEmpty
+    @NotNull
+    private String uuid;
 }

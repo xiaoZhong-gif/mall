@@ -17,7 +17,10 @@ public class RedisCacheOperationServiceImpl implements CacheOperationService {
      *token的保存
      */
     private static String OAUTH2_TOKEN = "oauth2:token";
-
+    /**
+     * 图形认证码
+     */
+    private static String CAPTCHA_CODE = "captcha:code";
 
     /**
      * 用:合并
@@ -42,5 +45,20 @@ public class RedisCacheOperationServiceImpl implements CacheOperationService {
     public boolean hasToken(String tokenId) {
         Boolean result = stringRedisTemplate.hasKey(join(OAUTH2_TOKEN, tokenId));
         return BooleanUtils.isTrue(result);
+    }
+
+    @Override
+    public void saveCaptchaCode(String uuid, String code) {
+        String redisKey = join(CAPTCHA_CODE, uuid);
+        stringRedisTemplate.opsForValue().set(redisKey, code, 10 * 60, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public boolean existsCaptchaCode(String uuid, String code) {
+        String redisKey = join(CAPTCHA_CODE, uuid);
+        String codeRedis = stringRedisTemplate.opsForValue().get(redisKey);
+        stringRedisTemplate.delete(redisKey);
+        boolean result = StringUtils.isNoneEmpty(codeRedis) && codeRedis.equalsIgnoreCase(code);
+        return result;
     }
 }
