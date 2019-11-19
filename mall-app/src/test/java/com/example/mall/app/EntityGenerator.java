@@ -56,8 +56,8 @@ public class EntityGenerator {
         }
         strategy.setSkipView(true);
         strategy.setCapitalMode(true);
-        strategy.setSuperServiceClass("BaseService");
-        strategy.setSuperServiceImplClass("BaseServiceImpl");
+        strategy.setSuperServiceClass("com.example.mall.app.service.BaseService");
+        strategy.setSuperServiceImplClass("com.example.mall.app.service.impl.BaseServiceImpl");
         strategy.setRestControllerStyle(true);
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
@@ -72,7 +72,7 @@ public class EntityGenerator {
 
         //
         PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent("com.example.example");
+        packageConfig.setParent("com.example.mall.app");
         packageConfig.setXml("resources");
 
         //

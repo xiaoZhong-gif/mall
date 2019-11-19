@@ -4,7 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.mall.app.common.constant.TokenConstant;
 import com.example.mall.app.common.result.R;
+import com.example.mall.app.entity.Admin;
+import com.example.mall.app.entity.User;
+import com.example.mall.app.modules.admin.form.LoginForm;
+import com.example.mall.app.service.AdminService;
 import com.example.mall.app.service.CacheOperationService;
+import com.example.mall.app.service.UserService;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,26 +33,31 @@ public class Oauth2IndexController {
 
     @Autowired
     CacheOperationService cacheOperationService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    AdminService adminService;
 
-    /*@Autowired
-    MessageService messageService;
-
-    @ApiOperation("登录")
+    @ApiOperation("管理员登录")
     @PostMapping("/login")
     public R login(@Validated @RequestBody LoginForm loginForm, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             throw new BindException(result);
         }
-        return R.ok(saveRedisAndBuildMap(loginForm.getPhone()));
-    }*/
+        Admin admin = adminService.getAdmin(loginForm.getUserName());
+        if (admin == null) {
+            return R.error(5100, "用户名或者密码错误");
+        }
+        return R.ok(saveRedisAndBuildMap(admin.getId()));
+    }
 
     /**
      * 签名把数据返回
      *
      * @return
      */
-    private Map<String, Object> saveRedisAndBuildMap(String name) {
-        String userId = name;
+    private Map<String, Object> saveRedisAndBuildMap(String id) {
+        String userId = id;
         String tokenId = UUID.randomUUID().toString();
         Date nowTime = new Date();
         String token = JWT.create().withClaim(TokenConstant.OAUTH_TOKEN_ID, tokenId).withClaim(TokenConstant.OAUTH_USER_ID, userId)
@@ -65,8 +75,8 @@ public class Oauth2IndexController {
         return map;
     }
 
-    @GetMapping("/getUser")
-    public R getUser(){
-        return R.ok("sssss");
+    @PostMapping("/getUser")
+    public R getUser() {
+        return R.ok("sda");
     }
 }
