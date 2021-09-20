@@ -28,7 +28,7 @@
         <mybatisplus.spring.boot.version>3.2.0</mybatisplus.spring.boot.version>
         <commons.io.version>2.6</commons.io.version>
         <commons.compress>1.19</commons.compress>
-        <shiro.version>1.4.1</shiro.version>
+        <shiro.version>1.8.0</shiro.version>
         <jwt.version>3.8.3</jwt.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <swagger.version>2.9.2</swagger.version>
