@@ -32,7 +32,7 @@
         <jwt.version>3.8.3</jwt.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <swagger.version>2.9.2</swagger.version>
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <guava.version>28.1-jre</guava.version>
         <poi.ooxml.version>4.1.0</poi.ooxml.version>
         <modelmapper.version>2.3.5</modelmapper.version>
